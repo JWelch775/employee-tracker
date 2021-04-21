@@ -38,17 +38,4 @@ SELECT * FROM employee;
 
 
 
-SELECT employee.first_name, employee.last_name, employee.role_id, role.title, role.salary, role.department_id
-FROM employee
-INNER JOIN role ON employee.role_id = role.id;
 
-SELECT employee.first_name, employee.last_name, department.dep_name AS Department
-FROM employee
-JOIN role ON employee.role_id = role.id
-JOIN department ON role.department_id = department.id
-ORDER BY employee.id;
-
-
-SELECT e.first_name AS empfn, e.last_name AS empln, e.manager_id, manager.first_name AS manfn, manager.last_name AS manln
-FROM employee AS e
-LEFT JOIN employee AS manager ON e.manager_id = manager.id;
