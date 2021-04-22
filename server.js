@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "password",
+    password: "Azrael73094!",
     database: "employee_db"
   });
 
@@ -28,7 +28,6 @@ function userPrompt() {
               'View all Employees by Department?',
               'Add new Employee?',
               'Add Role?',
-              'Add Department?'
             ]
     }
 ]).then(function(val) {
@@ -52,11 +51,6 @@ function userPrompt() {
             case 'Add Role?':
               addRole();
               break;
-      
-            case 'Add Department?':
-              addDepartment();
-              break;
-    
             }
     })
 }
@@ -195,8 +189,7 @@ function addRole() {
               }
           }
   
-          connection.query(
-              'INSERT INTO role SET ?',
+          connection.query('INSERT INTO role SET ?',
               {
                   title: answer.new_role,
                   salary: answer.salary,
@@ -211,16 +204,3 @@ function addRole() {
   })
 };
 
-  function addDepartment() {
-    inquirer.prompt([
-        {
-            name: "dep_name",
-            type: "input",
-            message: "Enter new department:"
-        }
-    ]).then(answers => {
-        connection.query("INSERT INTO department.dep_name  VALUES (?)", [answers.dep_name]);
-        console.log(`${answers.dep_name} was added to departments.`);
-        userPrompt();
-    })
-};
