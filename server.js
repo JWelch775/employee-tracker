@@ -27,7 +27,6 @@ function userPrompt() {
               'View all Employees by Roles?',
               'View all Employees by Department?',
               'Add new Employee?',
-              'Update Employee',
               'Add Role?',
               'Add Department?'
             ]
@@ -47,20 +46,16 @@ function userPrompt() {
               break;
           
           case 'Add new Employee?':
-                addEmployee();
-                break;
-
-          case 'Update Employee':
-                //add update employee function call
-                break;
+              addEmployee();
+              break;
       
             case 'Add Role?':
-                //add new role function call
-                break;
+              addRole();
+              break;
       
             case 'Add Department?':
-                //add new department function call
-                break;
+              addDepartment();
+              break;
     
             }
     })
@@ -162,3 +157,70 @@ function addEmployee() {
 
   })
 }
+
+
+function addRole() {
+  connection.query('SELECT * FROM department',
+   function(err, res) {
+      if (err) throw err;
+  
+      inquirer 
+      .prompt([
+          {
+              name: 'new_role',
+              type: 'input', 
+              message: "What new role would you like to add?"
+          },
+          {
+              name: 'salary',
+              type: 'input',
+              message: 'What is the salary of this role? (Enter a number)'
+          },
+          {
+              name: 'Department',
+              type: 'list',
+              choices: function() {
+                  var deptArry = [];
+                  for (let i = 0; i < res.length; i++) {
+                  deptArry.push(res[i].dep_name);
+                  }
+                  return deptArry;
+              },
+          }
+      ]).then(function (answer) {
+          var departmentId;
+          for (let a = 0; a < res.length; a++) {
+              if (res[a].name == answer.department) {
+                  departmentId = res[a].id;
+              }
+          }
+  
+          connection.query(
+              'INSERT INTO role SET ?',
+              {
+                  title: answer.new_role,
+                  salary: answer.salary,
+                  department_id: departmentId
+              },
+              function (err, res) {
+                  if(err)throw err;
+                  console.log('Your new role has been added!');
+                  userPrompt();
+              })
+      })
+  })
+};
+
+  function addDepartment() {
+    inquirer.prompt([
+        {
+            name: "dep_name",
+            type: "input",
+            message: "Enter new department:"
+        }
+    ]).then(answers => {
+        connection.query("INSERT INTO department.dep_name  VALUES (?)", [answers.dep_name]);
+        console.log(`${answers.dep_name} was added to departments.`);
+        userPrompt();
+    })
+};
