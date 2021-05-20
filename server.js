@@ -93,3 +93,31 @@ function mainMenu(){
         }
     });
 }
+
+//view all employees
+
+
+//view employees by department
+
+//view all employees by role 
+
+//adding an employee
+
+//adding a role
+
+//adding a department 
+
+//update employee role
+
+//update employee manager
+
+//view all employees by manager
+
+//delete an employee
+
+//delete a role
+
+//delete a department
+
+//view department budget
+
