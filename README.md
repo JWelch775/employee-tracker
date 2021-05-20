@@ -1,4 +1,3 @@
-![employee tracker demo](https://user-images.githubusercontent.com/73437887/115650794-907e1e80-a2ef-11eb-917e-80f7f034cafc.gif)
 # Employee Tracker
   
 #### Table of Contents
@@ -11,7 +10,7 @@
 ## Description
 * With this app an employer will be able to view, add, and delete employees. This includes their managers the department they work for and their current role.
 ## Installation 
-* In order to use this application you will need to clone this repository and use node to install inquirer, mysql2, and console.table. You will also need MySQL workbench to get the database up and running.
+* In order to use this application you will need to clone this repository. Then in the root directory of the project use the command 'npm i' to install the required dependencies. You will also need MySQL workbench to get the database up and running and to seed the database.
 ## Usage 
 * This app can be used for easily organizing your employee base and streamlining your accountability protocalls
 ## Credits
