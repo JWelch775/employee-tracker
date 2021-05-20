@@ -1,4 +1,3 @@
-![employee tracker demo](https://user-images.githubusercontent.com/73437887/115650794-907e1e80-a2ef-11eb-917e-80f7f034cafc.gif)
 # Employee Tracker
   
 #### Table of Contents
