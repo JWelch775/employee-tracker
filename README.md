@@ -1,3 +1,4 @@
+![employee tracker demo](https://user-images.githubusercontent.com/73437887/115650794-907e1e80-a2ef-11eb-917e-80f7f034cafc.gif)
 # Employee Tracker
   
 #### Table of Contents
@@ -26,3 +27,4 @@ This project is covered under the license License [MIT](https://opensource.org/l
 ## Questions
 * For additional help or if you would like to contribute to this project reach out to me at Justin.Welch075@gmail.com
 * Follow me on Github at [JWelch775](http://github.com/JWelch775)
+
