@@ -337,6 +337,24 @@ function addRole(){
 }
 
 //adding a department 
+function addDept(){
+
+    inquirer.prompt({
+
+            name: "deptName",
+            type: "input",
+            message: "Department Name: "
+        }).then((answer) => {
+                
+            connection.query(`INSERT INTO department (name)VALUES ("${answer.deptName}");`, (err, res) => {
+                if(err) return err;
+                console.log("\n DEPARTMENT ADDED...\n ");
+                mainMenu();
+            });
+
+        });
+}
+
 
 //update employee role
 
