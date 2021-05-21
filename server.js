@@ -357,6 +357,69 @@ function addDept(){
 
 
 //update employee role
+function updateEmpRole(){
+
+    let employeeArr = [];
+    let roleArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+        return Promise.all([
+
+            conn.query('SELECT id, title FROM role ORDER BY title ASC'), 
+            conn.query("SELECT employee.id, concat(employee.first_name, ' ' ,  employee.last_name) AS Employee FROM employee ORDER BY Employee ASC")
+        ]);
+    }).then(([roles, employees]) => {
+
+        for (i=0; i < roles.length; i++){
+            roleArr.push(roles[i].title);
+        }
+
+        for (i=0; i < employees.length; i++){
+            employeeArr.push(employees[i].Employee);
+        }
+
+        return Promise.all([roles, employees]);
+    }).then(([roles, employees]) => {
+
+        inquirer.prompt([
+            {
+                name: "employee",
+                type: "list",
+                message: "Who would you like to edit?",
+                choices: employeeArr
+            }, {
+                name: "role",
+                type: "list",
+                message: "What is their new role?",
+                choices: roleArr
+            },]).then((answer) => {
+
+                let roleID;
+                let employeeID;
+
+                for (i=0; i < roles.length; i++){
+                    if (answer.role == roles[i].title){
+                        roleID = roles[i].id;
+                    }
+                }
+
+                for (i=0; i < employees.length; i++){
+                    if (answer.employee == employees[i].Employee){
+                        employeeID = employees[i].id;
+                    }
+                }
+                
+                connection.query(`UPDATE employee SET role_id = ${roleID} WHERE id = ${employeeID}`, (err, res) => {
+                    if(err) return err;
+                    console.log(`\n ${answer.employee} ROLE UPDATED TO ${answer.role}...\n `);
+
+                    mainMenu();
+                });
+            });
+    });
+    
+}
 
 //update employee manager
 
