@@ -592,7 +592,7 @@ function deleteEmp(){
 
 //delete a role
 function deleteRole(){
-    
+
     let roleArr = [];
 
     promisemysql.createConnection(connectionProperties
@@ -660,6 +660,73 @@ function deleteRole(){
 }
 
 //delete a department
+function deleteDept(){
+    let deptArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        return conn.query("SELECT id, name FROM department");
+    }).then((depts) => {
+
+        for (i=0; i < depts.length; i++){
+            deptArr.push(depts[i].name);
+        }
+
+        inquirer.prompt([{
+            name: "continueDelete",
+            type: "list",
+            message: "*** WARNING *** Deleting a department will delete all roles and employees associated with the department. Do you want to continue?",
+            choices: ["NO", "YES"]
+        }]).then((answer) => {
+            if (answer.continueDelete === "NO") {
+                mainMenu();
+            }
+
+        }).then(() => {
+
+            inquirer.prompt([{
+
+                name: "dept",
+                type: "list",
+                message: "Which department would you like to delete?",
+                choices: deptArr
+            }, {
+
+                name: "confirmDelete",
+                type: "Input",
+                message: "Type the department name EXACTLY to confirm deletion of the department: "
+
+            }]).then((answer) => {
+
+                if(answer.confirmDelete === answer.dept){
+
+                    let deptID;
+                    for (i=0; i < depts.length; i++){
+                        if (answer.dept == depts[i].name){
+                            deptID = depts[i].id;
+                        }
+                    }
+                    
+                    connection.query(`DELETE FROM department WHERE id=${deptID};`, (err, res) => {
+                        if(err) return err;
+
+                        console.log(`\n DEPARTMENT '${answer.dept}' DELETED...\n `);
+
+                        mainMenu();
+                    });
+                } 
+                else {
+
+                    console.log(`\n DEPARTMENT '${answer.dept}' NOT DELETED...\n `);
+
+                    mainMenu();
+                }
+                
+            });
+        })
+    });
+}
 
 //view department budget
 
