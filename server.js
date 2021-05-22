@@ -591,6 +591,73 @@ function deleteEmp(){
 }
 
 //delete a role
+function deleteRole(){
+    
+    let roleArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        return conn.query("SELECT id, title FROM role");
+    }).then((roles) => {    
+
+        for (i=0; i < roles.length; i++){
+            roleArr.push(roles[i].title);
+        }
+
+        inquirer.prompt([{
+            name: "continueDelete",
+            type: "list",
+            message: "*** WARNING *** Deleting role will delete all employees associated with the role. Do you want to continue?",
+            choices: ["NO", "YES"]
+        }]).then((answer) => {
+
+            if (answer.continueDelete === "NO") {
+                mainMenu();
+            }
+
+        }).then(() => {
+
+            inquirer.prompt([{
+                name: "role",
+                type: "list",
+                message: "Which role would you like to delete?",
+                choices: roleArr
+            }, {
+                name: "confirmDelete",
+                type: "Input",
+                message: "Type the role title EXACTLY to confirm deletion of the role"
+
+            }]).then((answer) => {
+
+                if(answer.confirmDelete === answer.role){
+
+                    let roleID;
+                    for (i=0; i < roles.length; i++){
+                        if (answer.role == roles[i].title){
+                            roleID = roles[i].id;
+                        }
+                    }
+                    
+                    connection.query(`DELETE FROM role WHERE id=${roleID};`, (err, res) => {
+                        if(err) return err;
+
+                        console.log(`\n ROLE '${answer.role}' DELETED...\n `);
+
+                        mainMenu();
+                    });
+                } 
+                else {
+
+                    console.log(`\n ROLE '${answer.role}' NOT DELETED...\n `);
+
+                    mainMenu();
+                }
+                
+            });
+        })
+    });
+}
 
 //delete a department
 
