@@ -13,6 +13,7 @@
 * In order to use this application you will need to clone this repository. Then in the root directory of the project use the command 'npm i' to install the required dependencies. You will also need MySQL workbench to get the database up and running and to seed the database.
 ## Usage 
 * This app can be used for easily organizing your employee base and streamlining your accountability protocalls
+* Link to demonstration [video](https://drive.google.com/file/d/1L25d6NeGCtE50zj-ynlNBFQaiXsr7hzL/view)
 ## Credits
 * Justin Welch
 
@@ -20,7 +21,7 @@
     
 ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-This project is covered under the license License [MIT](https://opensource.org/licenses/MIT)
+This project is covered under the [MIT](https://opensource.org/licenses/MIT) license
     
 
 ## Questions
