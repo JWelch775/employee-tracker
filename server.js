@@ -535,6 +535,60 @@ function viewAllEmpByMngr(){
 }
 
 //delete an employee
+function deleteEmp(){
+
+    let employeeArr = [];
+
+    promisemysql.createConnection(connectionProperties
+    ).then((conn) => {
+
+        return  conn.query("SELECT employee.id, concat(employee.first_name, ' ' ,  employee.last_name) AS employee FROM employee ORDER BY Employee ASC");
+    }).then((employees) => {
+
+        for (i=0; i < employees.length; i++){
+            employeeArr.push(employees[i].employee);
+        }
+
+        inquirer.prompt([
+            {
+                name: "employee",
+                type: "list",
+                message: "Who would you like to delete?",
+                choices: employeeArr
+            }, {
+                name: "yesNo",
+                type: "list",
+                message: "Confirm deletion",
+                choices: ["NO", "YES"]
+            }]).then((answer) => {
+
+                if(answer.yesNo == "YES"){
+                    let employeeID;
+
+                    for (i=0; i < employees.length; i++){
+                        if (answer.employee == employees[i].employee){
+                            employeeID = employees[i].id;
+                        }
+                    }
+                    
+                    connection.query(`DELETE FROM employee WHERE id=${employeeID};`, (err, res) => {
+                        if(err) return err;
+
+                        console.log(`\n EMPLOYEE '${answer.employee}' DELETED...\n `);
+                        
+                        mainMenu();
+                    });
+                } 
+                else {
+
+                    console.log(`\n EMPLOYEE '${answer.employee}' NOT DELETED...\n `);
+
+                    mainMenu();
+                }
+                
+            });
+    });
+}
 
 //delete a role
 
